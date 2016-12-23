@@ -1,7 +1,7 @@
-# Automatizacion de mensajes en python
-## USO
+# Automatización de mensajes en python
+## Uso
  ```python
- $python messenger_python userID password delay [img-url]
+ python messenger_python userID password delay [img-url]
  ```
  - userID: Código de usuario. [Puedes obtenerlo aquí](http://findmyfbid.com/)
  - password: Contraseña de la cuenta

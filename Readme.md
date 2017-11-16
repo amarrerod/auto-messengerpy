@@ -1,12 +1,16 @@
 # Automatización de mensajes en python
 ## Uso
  ```python
- python messenger_python userID password delay [img-url]
+ python messenger_message email pass delay --<mode>
  ```
- - userID: Código de usuario. [Puedes obtenerlo aquí](http://findmyfbid.com/)
- - password: Contraseña de la cuenta
- - delay: Tiempo de espera para reenvíar el mensajes
- - img: opcional se permite envíar el mensaje con una imagen vía url
+
+## Modes
+
+ - Loop:
+ Envía en un bucle continuo el mensaje junto con un emoji e imagen al usuario o grupo *username*
+  ````python
+  --loop <username> <User || Group> <message> [image_url] [emoji]
+  ```
 
 ## Requisitos
  - Instalar [fbchat](https://github.com/carpedm20/fbchat)

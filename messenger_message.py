@@ -1,38 +1,37 @@
-import fbchat
 import time
 import sys
 
+from fbchat import Client
+from fbchat.models import *
+from modes import sendInLoop
+
+def printUsage():
+	print("Error!! \n Usage: $python messenger_message email pass delay --<mode>")
+	print("Modes: \n")
+	print("loop <username> <User || Group> <message> [image_url] [emoji]")
+
 def main(argv):
-    print argv
-    if len(argv) < 3:
-        print ("Error!! \n Usage: $python messenger_message userID pass time [url image]")
-    else:
-        imgSet = False
-        imgURL = ""
-        if len(argv) == 4:
-            print "Se ha definido una imagen"
-            imgSet = True
-            imgURL = argv[3]
-
-        identifier = argv[0]
-        password = argv[1]
-        delay = int(argv[2])
-        friend = raw_input("Friend: ")
-        message = raw_input("Message: ")
-        client = fbchat.Client(identifier, password)
-        friends = client.getUsers(friend)
-        friend = friends[0]
-        while True:
-            if imgSet:
-                client.sendRemoteImage(friend.uid, message=message, image = imgURL)
-            else:
-                sent = client.send(friend.uid, message)
-                if sent:
-                    print ("Message sent sucessfully!")
-            time.sleep(delay)
-
-
+	if len(argv) < 4:
+		printUsage()
+	else:
+		client = Client(argv[0], argv[1])
+		delay = int(argv[2])
+		if str(argv[3] == "--loop"):
+			if len(argv) < 7:
+				printUsage()
+				exit(1)
+			user = argv[4]
+			if str(argv[5]) == "User":
+				thtype = ThreadType.USER
+			else:
+				thtype = ThreadType.GROUP
+			message = argv[6]
+			image = argv[7] if (len(argv) >= 8) else None
+			emoji = argv[8] if (len(argv) >= 9) else None
+			sendInLoop(client=client, username=user, type=thtype, delay=delay, message=message, image=image,
+			           emoji=emoji,
+			           emoji_size=EmojiSize.LARGE)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+	main(sys.argv[1:])
